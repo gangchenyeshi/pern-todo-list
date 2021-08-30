@@ -15,7 +15,7 @@ app.use(express.json());
 
 // app.use(express.static(path.join(__dirname, "client/build"))); 
 // OR
-// app.use(express.static("./client/build")); 
+app.use(express.static("./client/build")); 
 
 if(process.env.NODE_ENV === "production") {
     //server static content
@@ -97,6 +97,11 @@ app.delete("/todos/:id", async(req, res)=>{
     }
 });
 
+//catch all methods 
+//which means what ever you type after the "/" it will redirect to home
+app.get("*", (erq, res) =>{
+    res.sendFile(path.join(__dirname, "client/build/index.html"))
+})
 app.listen(PORT, ()=>{
     console.log(`Server is started on port no ${PORT}`)
 }) 
