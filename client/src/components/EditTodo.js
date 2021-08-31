@@ -5,16 +5,14 @@ const EditTodo = ({ todo }) => {
     const [description, setDescription] = useState(todo.description);
 
     //edit description function
-    const updateDescription = async(e)=>{
-        e.preventDefault();
+    const updateDescription = async(id)=>{
         try {
             const body = { description };
-            const respond = await fetch(`/todos/${todo.todo_id}`, {
+            await fetch(`/todos/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify(body)
             })
-            console.log(respond);
             window.location="/"
         } catch (err) {
             console.log(err.message)
@@ -69,7 +67,7 @@ const EditTodo = ({ todo }) => {
                                 type="button" 
                                 className="btn btn-warning" 
                                 data-dismiss="modal"
-                                onClick={e => updateDescription(e)}
+                                onClick={() => updateDescription(todo.todo_id)}
                             >
                                 Edit
                             </button>
