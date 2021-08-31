@@ -16,7 +16,7 @@ const devConfig = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD
 //       rejectUnauthorized: false,
 //     },
 //   };
-const proConfig = process.env.DATABASE_URL
+const proConfig = process.env.HEROKU_POSTGRESQL_AQUA_URL
 //it is heroku addons
 
 const pool = new Pool ({
