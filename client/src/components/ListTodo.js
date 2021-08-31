@@ -10,7 +10,7 @@ const ListTodo = () => {
             const deleteTodo = await fetch(`/todos/${id}`, {
                 method: "DELETE"
             });
-            console.log("Todo is Deleted :", deleteTodo);
+            // console.log("Todo is Deleted :", deleteTodo);
             setTodos(todos.filter(todo => todo.todo_id !== id)); 
             //it will filter all the todos and if todo_id not equal to id then spit it out like refresh
         } catch (err) {

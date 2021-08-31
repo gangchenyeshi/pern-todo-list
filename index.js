@@ -1,5 +1,5 @@
 const express = require("express");
-const cors =require("cors");
+const cors = require("cors");
 const pool = require("./db");
 
 const app = express();
@@ -15,16 +15,18 @@ app.use(express.json());
 
 // app.use(express.static(path.join(__dirname, "client/build"))); 
 // OR
-app.use(express.static("./client/build")); 
+// app.use(express.static("./client/build"));
 
-if(process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
     //server static content
     //npm run build
     app.use(express.static(path.join(__dirname, "client/build")))
 }
 
-console.log(__dirname)
-console.log(path.join(__dirname, "client/build"))
+// console.log(__dirname);
+// console.log(path.join(__dirname, "client/build"));
+
+
 //ROUTERS
 
 //create a todo
@@ -37,7 +39,7 @@ app.post("/todos", async (req, res) => {
             [description]
         );
 
-        res.status(200).json(newTodo.rows[0])
+        res.status(200).json(newTodo.rows[0]);
     } catch (err) {
         console.log(err.message)
     }
@@ -74,7 +76,7 @@ app.put("/todos/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { description } = req.body;
-        const updateTodos = await pool.query(
+        await pool.query(
             "UPDATE todo SET description = $1 WHERE todo_id = $2",
             [description, id]
         );
@@ -84,9 +86,9 @@ app.put("/todos/:id", async (req, res) => {
     }
 })
 //delete a todo
-app.delete("/todos/:id", async(req, res)=>{
+app.delete("/todos/:id", async (req, res) => {
     try {
-        const{id}=req.params;
+        const { id } = req.params;
         const deleteTodos = await pool.query(
             "DELETE FROM todo WHERE todo_id = $1",
             [id]
@@ -99,9 +101,9 @@ app.delete("/todos/:id", async(req, res)=>{
 
 //catch all methods 
 //which means what ever you type after the "/" it will redirect to home
-app.get("*", (erq, res) =>{
+app.get("*", (erq, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"))
 })
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server is started on port no ${PORT}`)
-}) 
+})
